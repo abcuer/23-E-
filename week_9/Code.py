@@ -30,5 +30,5 @@ color_img = cv.cvtColor(img, cv.COLOR_GRAY2BGR)
 cv.line(color_img, bottom_point, top_point, (0, 255, 0), 2)
 
 plt.imshow(color_img)
-plt.title('Edge Image with Detected Line'), plt.xticks([]), plt.yticks([])
+plt.title(' Edge Image with Detected Line '), plt.xticks([]), plt.yticks([])
 plt.show()
