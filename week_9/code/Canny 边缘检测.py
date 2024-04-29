@@ -5,6 +5,8 @@ import numpy as np
 def Edge_Detection(image_path, threshold1=200, threshold2=250):
     img = cv.imread(image_path, 0)
     dst = cv.GaussianBlur(img, (17, 17), 0)
+
+    # Canny 边缘检测
     edges = cv.Canny(img, threshold1, threshold2)
 
     # 找到所有非零像素点的坐标
@@ -26,4 +28,4 @@ def Edge_Detection(image_path, threshold1=200, threshold2=250):
     cv.destroyAllWindows()
 
 # 测试封装的函数
-Edge_Detection('week_9/src_1/img_2.jpg')
+Edge_Detection('week_9/src_1/img_1.jpeg')

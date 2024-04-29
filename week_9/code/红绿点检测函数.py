@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 
 # 读取图像
-image = cv2.imread('week_9/src_1/img_2.jpg')
+image = cv2.imread('week_9/src_1/img_1.jpeg')
 
 # 将图像从 BGR 色彩空间转换为 HSV 色彩空间
 hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)

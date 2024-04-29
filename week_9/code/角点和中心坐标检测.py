@@ -1,8 +1,6 @@
 import cv2
 import numpy as np
-import redgreen
-# 导入红绿色检测函数
-
+import Corner_Red_Green
 
 def preprocess_image(image_path):
     # 读取图像
@@ -12,7 +10,7 @@ def preprocess_image(image_path):
     alpha = 1.5  # 对比度增强参数
     beta = 15  # 亮度增强参数
     enhanced_image = cv2.convertScaleAbs(image, alpha=alpha, beta=beta)
-
+    
     # 去噪
     denoised_image = cv2.fastNlMeansDenoisingColored(enhanced_image, None, 10, 10, 7, 21)
 
@@ -61,21 +59,16 @@ def detect_quadrilaterals(image):
 
 # 主函数
 if __name__ == "__main__":
-    image_path = 'week_9\src_1\img_1.jpg'
+    image_path = 'week_9\src_1\img_1.jpeg'
 
     # 图像预处理
     processed_image = preprocess_image(image_path)
 
     # 检测四边形并标记特征
-    annotated_image_quadrilaterals = detect_quadrilaterals(processed_image)
+    annotated_image = detect_quadrilaterals(processed_image)
 
-    # 检测红色和绿色区域并标记 
-    red_green_image = redgreen.detect_red_and_green(image_path)
-
-    # 将两个图像叠加起来
-    combined_image = cv2.addWeighted(annotated_image_quadrilaterals, 0.5, red_green_image, 0.5, 0)
 
     # 显示结果
-    cv2.imshow('Combined Annotated Image', combined_image)
+    cv2.imshow('Annotated Image', annotated_image)
     cv2.waitKey(0)
     cv2.destroyAllWindows()

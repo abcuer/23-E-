@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 
+# 检测红绿点坐标
 def detect_red_and_green(image_path):
     # 读取图像
     image = cv2.imread(image_path)
@@ -43,6 +44,7 @@ def detect_red_and_green(image_path):
     # 返回带有标记的图像
     return image
 
+#使图像易于处理
 def preprocess_image(image_path):
     # 读取图像
     image = cv2.imread(image_path)
@@ -60,6 +62,7 @@ def preprocess_image(image_path):
 
     return blurred_image
 
+#描绘四边矩形
 def detect_quadrilaterals(image):
     # 边缘检测
     edges = cv2.Canny(image, 50, 150)
@@ -74,7 +77,7 @@ def detect_quadrilaterals(image):
     for contour in contours:
         # 进行轮廓逼近
         peri = cv2.arcLength(contour, True)
-        approx = cv2.approxPolyDP(contour, 0.02 * peri, True)
+        approx = cv2.approxPolyDP(contour, 0.01 * peri, True)
 
         # 如果逼近的轮廓有四个顶点，则认为是四边形
         if len(approx) == 4:
@@ -100,7 +103,7 @@ def detect_quadrilaterals(image):
 
 # 主函数
 if __name__ == "__main__":
-    image_path = 'week_9\src_1\img_1.jpg'
+    image_path = 'week_9\src_1\img_1.jpeg'
 
     # 图像预处理
     processed_image = preprocess_image(image_path)
@@ -110,9 +113,16 @@ if __name__ == "__main__":
 
     # 检测红色和绿色区域并标记
     red_green_image = detect_red_and_green(image_path)
+    
+    # 将角点和红绿点标记同时显示在图像上
+    Final_image = cv2.addWeighted(annotated_image,0.5,red_green_image,0.5,-1)
 
     # 显示结果
-    cv2.imshow('Annotated Image', annotated_image)
-    cv2.imshow('Red and Green Detection', red_green_image)
+    cv2.imshow('Corner_Detection Image', annotated_image)
     cv2.waitKey(0)
+    cv2.imshow('Red_Green Detection', red_green_image)
+    cv2.waitKey(0)
+    cv2.imshow('Final_Image', Final_image)
+    cv2.waitKey(0)
+
     cv2.destroyAllWindows()
