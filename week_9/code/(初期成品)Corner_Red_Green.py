@@ -68,44 +68,58 @@ def detect_quadrilaterals(image):
     edges = cv2.Canny(image, 50, 150)
 
     # 轮廓检测
-    contours, _ = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    contours, _ = cv2.findContours(edges, cv2.RETR_TREE, cv2.CHAIN_APPROX_TC89_KCOS)
 
     # 复制图像以避免修改原始图像
     annotated_image = image.copy()
 
     # 遍历轮廓
     for contour in contours:
-        # 进行轮廓逼近
-        peri = cv2.arcLength(contour, True)
-        approx = cv2.approxPolyDP(contour, 0.01 * peri, True)
+        # 计算轮廓面积
+        area = cv2.contourArea(contour)
 
-        # 如果逼近的轮廓有四个顶点，则认为是四边形
-        if len(approx) == 4:
-            # 在图像上绘制绿色的轮廓
-            cv2.drawContours(annotated_image, [approx], -1, (0, 255, 0), 2)
+        # 去除干扰部分的面积
+        min_area = 500000
+        max_area = 800000000000
+        if min_area < area < max_area:
+            # 进行轮廓逼近
+            peri = cv2.arcLength(contour, True)
+            approx = cv2.approxPolyDP(contour, 0.01 * peri, True)
 
-            # 计算四边形的中心点
-            M = cv2.moments(approx)
-            if M['m00'] != 0:
-                cx = int(M['m10'] / M['m00'])
-                cy = int(M['m01'] / M['m00'])
+            # 如果逼近的轮廓有四个顶点，则认为是四边形
+            if len(approx) == 4:
+                # 在图像上绘制绿色的轮廓
+                cv2.drawContours(annotated_image, [approx], -1, (0, 255, 0), 2)
 
-                # 在图像上标记中心点为蓝色
-                cv2.circle(annotated_image, (cx, cy), 5, (255, 0, 0), -1)
+                # 计算四边形的中心点
+                M = cv2.moments(approx)
+                if M['m00'] != 0:
+                    cx = int(M['m10'] / M['m00'])
+                    cy = int(M['m01'] / M['m00'])
 
-            # 在图像上标记四个顶点并打印坐标
-            for point in approx:
-                x, y = point[0]
-                cv2.circle(annotated_image, (x, y), 5, (0, 0, 255), -1)
-                cv2.putText(annotated_image, f'({x}, {y})', (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
+                    # 在图像上标记中心点为蓝色
+                    cv2.circle(annotated_image, (cx, cy), 5, (255, 0, 0), -1)
+                    cv2.putText(annotated_image, f'({cx}, {cy})', (cx, cy), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (100, 0, 255), 2)
+
+                # 在图像上标记四个顶点并打印坐标
+                for point in approx:
+                    x, y = point[0]
+                    cv2.circle(annotated_image, (x, y), 5, (0, 0, 255), -1)
+                    cv2.putText(annotated_image, f'({x}, {y})', (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (100, 0, 255), 2)
 
     return annotated_image
 
+
+
 # 主函数
 if __name__ == "__main__":
-    image_path = 'week_9\src_1\img_1.jpeg'
+    image_path = 'week_9/src_1/img_3.jpeg'
+    Upload_Str1 = 'week_9/out/out_3/1_Corner_Detection Image.jpeg'
+    Upload_Str2 = 'week_9/out/out_3/2_Red_Green Detection.jpeg'
+    Upload_Str3 = 'week_9/out/out_3/3_Final_Image.jpeg'
 
     # 图像预处理
+    # image = cv2.
     processed_image = preprocess_image(image_path)
 
     # 检测四边形并标记特征
@@ -117,18 +131,12 @@ if __name__ == "__main__":
     # 将角点和红绿点标记同时显示在图像上
     Final_image = cv2.addWeighted(annotated_image,0.5,red_green_image,0.5,-1)
 
-    # 保存图像 
+    # 保存图像
+    cv2.imwrite(Upload_Str1, annotated_image)
+    cv2.imwrite(Upload_Str2, red_green_image)
+    cv2.imwrite(Upload_Str3, Final_image)
     
     # 显示结果
-    cv2.imwrite('week_9/out/1_Corner_Detection Image.jpeg', annotated_image)
-    cv2.imshow('Corner_Detection Image', annotated_image)
-    cv2.waitKey(0)
-
-    cv2.imwrite('week_9/out/2_Red_Green Detection.jpeg', red_green_image)
-    cv2.imshow('Red_Green Detection',red_green_image)
-    cv2.waitKey(0)
-
-    cv2.imwrite('week_9/out/3_Final_Image.jpeg', Final_image)
-    cv2.imshow('Final_Image', Final_image)
+    cv2.imshow('Final Image',Final_image)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
