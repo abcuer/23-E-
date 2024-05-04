@@ -80,7 +80,7 @@ def detect_quadrilaterals(image):
 
         # 去除干扰部分的面积
         min_area = 500000
-        max_area = 800000000000
+        max_area = 80000000000
         if min_area < area < max_area:
             # 进行轮廓逼近
             peri = cv2.arcLength(contour, True)
@@ -89,7 +89,7 @@ def detect_quadrilaterals(image):
             # 如果逼近的轮廓有四个顶点，则认为是四边形
             if len(approx) == 4:
                 # 在图像上绘制绿色的轮廓
-                cv2.drawContours(annotated_image, [approx], -1, (0, 255, 0), 2)
+                cv2.drawContours(annotated_image, [approx], -1, (255, 0, 0), 2)
 
                 # 计算四边形的中心点
                 M = cv2.moments(approx)
@@ -113,13 +113,12 @@ def detect_quadrilaterals(image):
 
 # 主函数
 if __name__ == "__main__":
-    image_path = 'week_9/src_2/img_4.png'
-    Upload_Str1 = 'week_9/Output_1/out_4/1_EdgeDetection_Image.jpeg'
-    Upload_Str2 = 'week_9/Output_1/out_4/2_RedGreen_Image.jpeg'
-    Upload_Str3 = 'week_9/Output_1/out_4/3_Final_Image.jpeg'
+    image_path = 'week_9/src_1/img_3.jpeg'
+    Upload_Str1 = 'week_9/Code/Final_Code/first/Output_1/out_3/1_EdgeDetection_Image.jpeg'
+    Upload_Str2 = 'week_9/Code/Final_Code/first/Output_1/out_3/2_RedGreen_Image.jpeg'
+    Upload_Str3 = 'week_9/Code/Final_Code/first/Output_1/out_3/3_Final_Image.jpeg'
 
     # 图像预处理
-    # image = cv2.
     processed_image = preprocess_image(image_path)
 
     # 检测四边形并标记特征
@@ -129,7 +128,7 @@ if __name__ == "__main__":
     red_green_image = detect_red_and_green(image_path)
     
     # 将角点和红绿点标记同时显示在图像上
-    Final_image = cv2.addWeighted(annotated_image,0.5,red_green_image,0.5,-1)
+    Final_image = cv2.addWeighted(annotated_image,0.5,red_green_image,0.5,0)
 
     # 保存图像
     cv2.imwrite(Upload_Str1, annotated_image)

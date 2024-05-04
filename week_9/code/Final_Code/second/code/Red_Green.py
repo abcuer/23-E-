@@ -3,7 +3,6 @@ import numpy as np
 
 # 检测红绿点坐标
 def detect_red_and_green(image_path):
-    # 读取图像
     image = cv2.imread(image_path)
 
     # 将图像从 BGR 色彩空间转换为 HSV 色彩空间

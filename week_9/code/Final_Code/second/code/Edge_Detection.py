@@ -27,8 +27,10 @@ def detect_quadrilaterals(image):
     for contour in contours:
         # 计算轮廓面积
         area = cv2.contourArea(contour)
-        # 去除干扰部分的面积
-        if area > 2000:
+        # 去除干扰部分的区域
+        min_area = 26500
+        max_area = 8000000000000
+        if min_area < area < max_area:
             # 对轮廓进行逼近
             peri = cv2.arcLength(contour, True)
             approx = cv2.approxPolyDP(contour, 0.01 * peri, True)
@@ -45,33 +47,33 @@ def draw_points(image, quadrilaterals):
     
     for quad in quadrilaterals:
         # 绘制轮廓
-        cv2.drawContours(annotated_image, [quad], -1, (0, 255, 0), 2)
+        cv2.drawContours(annotated_image, [quad], -1, (255, 0, 0), 2)
 
          # 在图像上标记四个端点并打印坐标
         for i,point in enumerate(quad):
             x, y = point[0]
             cv2.circle(annotated_image, (x, y), 5, (0, 0, 255), -1)
-            cv2.putText(annotated_image, f'({x}, {y})', (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (100, 150, 255), 2)
+            cv2.putText(annotated_image, f'({x}, {y})', (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (100, 0, 255), 2)
             
             # 标记四边形的中心点
             M = cv2.moments(quad)
             cx = int(M['m10'] / M['m00'])
             cy = int(M['m01'] / M['m00'])
             cv2.circle(annotated_image, (cx, cy), 5, (0, 0, 255), -1)
-            cv2.putText(annotated_image, f'({cx}, {cy})', (cx, cy), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (100, 150, 255), 2)
+            cv2.putText(annotated_image, f'({cx}, {cy})', (cx, cy), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (100, 0, 255), 2)
 
     return annotated_image
 
 # 主函数
 if __name__ == "__main__":
-    image = 'week_9\src_1\img_1.jpeg'
+    image = 'week_9\src_1\img_3.png'
 
     # 图像预处理
     processed_image = preprocess_image(image)
     # 检测四边形并标记特征
     quadrilaterals = detect_quadrilaterals(processed_image)
     # 最终图像
-    Annotated_Image = draw_points(image, quadrilaterals)
+    Annotated_Image = draw_points(processed_image, quadrilaterals)
     # 显示结果
     cv2.imshow('Annotated Image', Annotated_Image)
     cv2.waitKey(0)
