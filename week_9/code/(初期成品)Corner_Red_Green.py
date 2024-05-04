@@ -113,10 +113,10 @@ def detect_quadrilaterals(image):
 
 # 主函数
 if __name__ == "__main__":
-    image_path = 'week_9/src_1/img_3.jpeg'
-    Upload_Str1 = 'week_9/out/out_3/1_Corner_Detection Image.jpeg'
-    Upload_Str2 = 'week_9/out/out_3/2_Red_Green Detection.jpeg'
-    Upload_Str3 = 'week_9/out/out_3/3_Final_Image.jpeg'
+    image_path = 'week_9/src_2/img_4.png'
+    Upload_Str1 = 'week_9/Output_1/out_4/1_EdgeDetection_Image.jpeg'
+    Upload_Str2 = 'week_9/Output_1/out_4/2_RedGreen_Image.jpeg'
+    Upload_Str3 = 'week_9/Output_1/out_4/3_Final_Image.jpeg'
 
     # 图像预处理
     # image = cv2.
