@@ -6,15 +6,13 @@ def preprocess_image(image_path):
     image = cv2.imread(image_path)
 
     # 去噪
-    denoised_image = cv2.fastNlMeansDenoisingColored(image, None, 10, 10, 7, 21)
+    Denoised_image = cv2.fastNlMeansDenoisingColored(image, None, 10, 10, 7, 21)
   
     # 图像增强和对比度增强
-    alpha = 1.5  # 对比度增强参数
-    beta = 15  # 亮度增强参数
-    enhanced_image = cv2.convertScaleAbs(denoised_image, alpha=alpha, beta=beta)
+    Enhanced_image = cv2.convertScaleAbs(Denoised_image, alpha=1, beta=30)
     
     # 边缘检测
-    canny_image = cv2.Canny(enhanced_image, 50, 150)
+    canny_image = cv2.Canny(Enhanced_image, 50, 150)
     
     return canny_image
 
@@ -28,7 +26,7 @@ def detect_quadrilaterals(image):
         # 计算轮廓面积
         area = cv2.contourArea(contour)
         # 去除干扰部分的区域
-        min_area = 26500
+        min_area = 50000
         max_area = 8000000000000
         if min_area < area < max_area:
             # 对轮廓进行逼近
@@ -66,7 +64,7 @@ def draw_points(image, quadrilaterals):
 
 # 主函数
 if __name__ == "__main__":
-    image = 'week_9\src_1\img_3.png'
+    image = 'week_9\src_2\img_4.jpeg'
 
     # 图像预处理
     processed_image = preprocess_image(image)

@@ -50,17 +50,16 @@ def preprocess_image(image_path):
     image = cv2.imread(image_path)
 
     # 图像增强和对比度增强
-    alpha = 1.5  # 对比度增强参数
-    beta = 15  # 亮度增强参数
-    enhanced_image = cv2.convertScaleAbs(image, alpha=alpha, beta=beta)
-
+    Enhanced_image = cv2.convertScaleAbs(image, alpha=1.5, beta=15)
     # 去噪
-    denoised_image = cv2.fastNlMeansDenoisingColored(enhanced_image, None, 10, 10, 7, 21)
-
+    Denoised_image = cv2.fastNlMeansDenoisingColored(Enhanced_image, None, 10, 10, 7, 21)
     # 高斯平滑
-    blurred_image = cv2.GaussianBlur(denoised_image, (5, 5), 0)
-
-    return blurred_image
+    Blurred_image = cv2.GaussianBlur(Denoised_image, (5, 5), 0)
+    
+    # # Canny边缘检测
+    # Canny_image = cv2.Canny(Blurred_image, 50, 150)
+    
+    return Blurred_image
 
 #描绘四边矩形
 def detect_quadrilaterals(image):
@@ -113,10 +112,10 @@ def detect_quadrilaterals(image):
 
 # 主函数
 if __name__ == "__main__":
-    image_path = 'week_9/src_1/img_3.jpeg'
-    Upload_Str1 = 'week_9/Code/Final_Code/first/Output_1/out_3/1_EdgeDetection_Image.jpeg'
-    Upload_Str2 = 'week_9/Code/Final_Code/first/Output_1/out_3/2_RedGreen_Image.jpeg'
-    Upload_Str3 = 'week_9/Code/Final_Code/first/Output_1/out_3/3_Final_Image.jpeg'
+    image_path = 'week_9/src_1/img_1.jpeg'
+    Upload_Str1 = 'week_9/Code/Final_Code/first/Output_1/out_1/1_EdgeDetection_Image.jpeg'
+    Upload_Str2 = 'week_9/Code/Final_Code/first/Output_1/out_1/2_RedGreen_Image.jpeg'
+    Upload_Str3 = 'week_9/Code/Final_Code/first/Output_1/out_1/3_Final_Image.jpeg'
 
     # 图像预处理
     processed_image = preprocess_image(image_path)
@@ -124,11 +123,14 @@ if __name__ == "__main__":
     # 检测四边形并标记特征
     annotated_image = detect_quadrilaterals(processed_image)
 
+    # # 复制3通道图像
+    # Copy_image = annotated_image.reshape(600, 800, 1).repeat(3, axis=2)
+    
     # 检测红色和绿色区域并标记
     red_green_image = detect_red_and_green(image_path)
     
     # 将角点和红绿点标记同时显示在图像上
-    Final_image = cv2.addWeighted(annotated_image,0.5,red_green_image,0.5,0)
+    Final_image = cv2.addWeighted(annotated_image, 0.5, red_green_image, 0.5, 0)
 
     # 保存图像
     cv2.imwrite(Upload_Str1, annotated_image)
@@ -136,6 +138,6 @@ if __name__ == "__main__":
     cv2.imwrite(Upload_Str3, Final_image)
     
     # 显示结果
-    cv2.imshow('Final Image',Final_image)
+    cv2.imshow('Final_image',Final_image)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
