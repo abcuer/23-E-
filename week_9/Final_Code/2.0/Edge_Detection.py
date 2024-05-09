@@ -11,7 +11,7 @@ def preprocess_image(image_path):
     Enhanced_image = cv2.convertScaleAbs(Denoised_image, alpha=1, beta=30)
     
     # 边缘检测
-    canny_image = cv2.Canny(Enhanced_image, 50, 150)
+    canny_image = cv2.Canny(Enhanced_image, 50, 200)
     
     return canny_image
 
@@ -71,7 +71,7 @@ if __name__ == "__main__":
     # 检测四边形并标记特征
     quadrilaterals = detect_quadrilaterals(processed_image)
     # 最终图像
-    Annotated_Image = draw_points(processed_image, quadrilaterals)
+    Annotated_Image = draw_points(image, quadrilaterals)
     # 显示结果
     cv2.imshow('Annotated Image', Annotated_Image)
     cv2.waitKey(0)
