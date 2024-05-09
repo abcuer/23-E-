@@ -4,7 +4,6 @@ import numpy as np
 def preprocess_image(image_path):
     # 读取图像
     image = cv2.imread(image_path)
-
     # 去噪
     Denoised_image = cv2.fastNlMeansDenoisingColored(image, None, 10, 10, 7, 21)
   
@@ -40,7 +39,8 @@ def detect_quadrilaterals(image):
     return quadrilaterals
         
         
-def draw_points(image, quadrilaterals):        
+def draw_points(image_path, quadrilaterals):
+    image = cv2.imread(image_path)      
     annotated_image = image.copy()
     
     for quad in quadrilaterals:
@@ -64,7 +64,7 @@ def draw_points(image, quadrilaterals):
 
 # 主函数
 if __name__ == "__main__":
-    image = 'week_9\src_2\img_4.jpeg'
+    image = 'week_9\src\img_5.jpeg'
 
     # 图像预处理
     processed_image = preprocess_image(image)

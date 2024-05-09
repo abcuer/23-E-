@@ -3,13 +3,13 @@ import numpy as np
 import Edge_Detection
 import Red_Green
 
-image_path = 'week_9/src_1/img_1.jpeg'
-image = cv2.imread(image_path)
+ # 读取图像
+image_path = 'week_9/src/img_5.jpeg'
 
 # 保存路径
-Upload_Str1 = 'week_9/Code/Final_Code/second/Output_2/out_1/1_EdgeDetection_Image(1).jpeg'
-Upload_Str2 = 'week_9/Code/Final_Code/second/Output_2/out_1/2_RedGreen_Image(1).jpeg'
-Upload_Str3 = 'week_9/Code/Final_Code/second/Output_2/out_1/3_Final_Image(1).jpeg'
+Upload_Str1 = 'week_9/Code/Final_Code/2.0/Output/out_5/1_EdgeDetection_image.jpeg'
+Upload_Str2 = 'week_9/Code/Final_Code/2.0/Output/out_5/2_RedGreen_image.jpeg'
+Upload_Str3 = 'week_9/Code/Final_Code/2.0/Output/out_5/3_Final_image.jpeg'
 
 # 红绿点图像
 RedGreen_image = Red_Green.detect_red_and_green(image_path)
@@ -17,7 +17,7 @@ RedGreen_image = Red_Green.detect_red_and_green(image_path)
 # 角点和中点坐标图像
 processed_image = Edge_Detection.preprocess_image(image_path)
 quadrilaterals = Edge_Detection.detect_quadrilaterals(processed_image)
-annotated_image = Edge_Detection.draw_points(image, quadrilaterals)
+annotated_image = Edge_Detection.draw_points(image_path, quadrilaterals)
 
 # 图像叠加
 Final_image = cv2.addWeighted(annotated_image, 0.5, RedGreen_image, 0.5, 0)

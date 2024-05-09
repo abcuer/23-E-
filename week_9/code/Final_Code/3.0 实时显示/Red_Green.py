@@ -2,8 +2,7 @@ import cv2
 import numpy as np
 
 # 检测红绿点坐标
-def detect_red_and_green(image_path):
-    image = cv2.imread(image_path)
+def detect_red_and_green(image):
 
     # 将图像从 BGR 色彩空间转换为 HSV 色彩空间
     hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
@@ -39,6 +38,8 @@ def detect_red_and_green(image_path):
         cv2.rectangle(image, (x, y), (x+w, y+h), (0, 255, 0), 2)
         # 在图像上标出绿色区域的中心坐标
         cv2.putText(image, f'Green: ({x + w // 2}, {y + h // 2})', (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+        # 在终端打印坐标  
+        # print(f"拐角{i+1} 坐标: ({x}, {y})")
 
     # 返回带有标记的图像
     return image
