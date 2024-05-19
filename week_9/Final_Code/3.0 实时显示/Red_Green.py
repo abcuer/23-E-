@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 
 def detect_color(hsv, lower_color, upper_color):
+    
     # 根据阈值创建掩码
     mask_color = cv2.inRange(hsv, lower_color, upper_color)
 
@@ -22,13 +23,9 @@ def detect_color(hsv, lower_color, upper_color):
     print('center_x:', center_x, 'center_y:', center_y)
 
     return center_x, center_y
-# 检测绿点坐标
+# 检测绿点坐标 
 def detect_green(image):
-    """
-    检测绿点坐标
-    :param image: 输入的BGR图像
-    :return: 绿点的中心坐标(x, y)
-    """
+
     # 将图像从BGR色彩空间转换为HSV色彩空间
     hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
 
@@ -72,7 +69,7 @@ def find_red_green(image):
 
 if __name__ == '__main__': 
 
-    image = cv2.imread('week_9/src/img_1.jpeg')
+    image = cv2.imread('week_9/src/img_3.jpeg')
     image = find_red_green(image)
     cv2.namedWindow('image',cv2.WINDOW_NORMAL)
     cv2.imshow('image', image)

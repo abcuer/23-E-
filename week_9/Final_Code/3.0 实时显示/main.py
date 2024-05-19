@@ -4,7 +4,7 @@ import Edge_Detection
 import Red_Green  
   
 # reading the video (请确保2是正确的摄像头索引或修改为对应的索引)  
-source = cv2.VideoCapture(1)  
+source = cv2.VideoCapture(2)  
   
 # 确保摄像头打开成功  
 if not source.isOpened():  
@@ -26,12 +26,12 @@ while True:
     RedGreen_image = Red_Green.find_red_green(img)  
 
     # 角点和中点坐标图像  
-    # processed_image = Edge_Detection.preprocess_image(img)  
-    # quadrilaterals = Edge_Detection.detect_quadrilaterals(processed_image)  
-    # annotated_image = Edge_Detection.draw_points(img, quadrilaterals)  
+    processed_image = Edge_Detection.preprocess_image(img)  
+    quadrilaterals = Edge_Detection.detect_quadrilaterals(processed_image)  
+    annotated_image = Edge_Detection.draw_points(img, quadrilaterals)  
   
     # 图像叠加  
-    # Final_image = cv2.addWeighted(annotated_image, 0.5, RedGreen_image, 0.5, 0)  
+    Final_image = cv2.addWeighted(annotated_image, 0.5, RedGreen_image, 0.5, 0)  
 
     Final_image = RedGreen_image
 

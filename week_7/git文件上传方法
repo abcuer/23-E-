@@ -1,8 +1,0 @@
-# Github上传文件
-1. git init
-2. git checkout 分支名：创建并转到分支（已有分支则其转到该分支的作用）
-3. git add *:上传全部文件
-4. git commit -m "备注"
-5. 配置账号密码（已配置则跳过）
-6. git remote add origin 远程分支链接：文件上传的位置
-7. git push -u origin 分支名

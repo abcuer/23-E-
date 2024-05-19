@@ -4,7 +4,7 @@ import Edge_Detection
 import Red_Green
 
  # 读取图像
-image_path = 'week_9/src/img_5.jpeg'
+image_path = 'week_9/src/img_1.jpeg'
 
 # 保存路径
 Upload_Str1 = 'week_9/Code/Final_Code/2.0/Output/out_5/1_EdgeDetection_image.jpeg'
