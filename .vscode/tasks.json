@@ -9,7 +9,7 @@
                 "-g",
                 "${file}",
                 "-o",
-                "${fileDirname}/${fileBasenameNoExtension}.exe",
+                "${fileDirname}/${fileBasenameNoExtension}",
                 "`pkg-config", "--libs", "--cflags", "opencv4`"  // 关键配置, 让g++编译器包含 OpenCV 文件头
             ],
             "options": {

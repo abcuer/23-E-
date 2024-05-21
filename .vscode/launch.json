@@ -4,7 +4,7 @@
         "name": "(gdb) 启动",
         "type": "cppdbg",
         "request": "launch",
-        "program": "${fileDirname}/${fileBasenameNoExtension}.exe",  // 关键配置, 要和 tasks.json 一样
+        "program": "${fileDirname}/${fileBasenameNoExtension}",  // 关键配置, 要和 tasks.json 一样
         "args": [],
         "stopAtEntry": false,
         "cwd": "${fileDirname}",
